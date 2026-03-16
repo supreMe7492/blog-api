@@ -18,4 +18,13 @@ async function insertPost(content,title,authorId){
     })
 }
 
-module.exports = {selectPost,insertPost};
+async function addAuthor(name,password){
+    return prisma.user.create({
+        data:{
+            name,
+            password
+        }
+    })
+}
+
+module.exports = {selectPost,insertPost,addAuthor};
