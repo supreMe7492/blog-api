@@ -27,4 +27,10 @@ async function addAuthor(name,password){
     })
 }
 
-module.exports = {selectPost,insertPost,addAuthor};
+async function selectUser(username){
+    return prisma.user.findMany({where:{
+        name: username
+    }})
+}
+
+module.exports = {selectPost,insertPost,addAuthor,selectUser};
