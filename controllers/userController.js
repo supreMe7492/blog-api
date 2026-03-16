@@ -20,7 +20,7 @@ async function logUser(req,res){
     const match = await bcrypt.compare(password,user.password);
     if(!match)
         return res.json("incorrect password");
-    const token = jwt.sign({id:user.id,name:user.name},process.env.secretkey,{ expiresIn: '7d' })
+    const token = jwt.sign({id:user.id},process.env.secretkey,{ expiresIn: '7d' })
     res.json(token);   
 }
 
