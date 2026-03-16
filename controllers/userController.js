@@ -24,4 +24,13 @@ async function logUser(req,res){
     res.json(token);   
 }
 
-module.exports = {signUser,logUser};
+function verifyUser(req,res,next){
+    const bearerToken = res.headers.authorization;
+    if(bearerToken){
+     const token = bearerToken.split(" ")[1];
+     req.token = token;
+    return next();
+    }
+    res.sendStatud(403);
+}
+module.exports = {signUser,logUser,verifyUser};
