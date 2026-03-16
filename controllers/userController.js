@@ -14,7 +14,7 @@ async function signUser(req,res) {
 async function logUser(req,res){
     const username = req.body.name;
     const password = req.body.password;
-    const user = selectUser(username);
+    const user = await selectUser(username);
     if(!user)
         return res.json("no username");
     const match = await bcrypt.compare(password,user.password);

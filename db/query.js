@@ -28,7 +28,7 @@ async function addAuthor(name,password){
 }
 
 async function selectUser(username){
-    return prisma.user.findMany({where:{
+    return prisma.user.findUnique({where:{
         name: username
     }})
 }

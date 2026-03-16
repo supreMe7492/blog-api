@@ -10,6 +10,9 @@ app.use('/',dashboard)
 const signUp = require('./routes/signuser');
 app.use('/signup',signUp);
 
+const logIn = require('./routes/loguser');
+app.use('/login',logIn);
+
 app.listen(3000,()=>{
     console.log('fuck');
 })
