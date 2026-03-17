@@ -13,6 +13,9 @@ app.use('/signup',signUp);
 const logIn = require('./routes/loguser');
 app.use('/login',logIn);
 
+const author = require('./routes/author');
+app.use('/author',author);
+
 app.listen(3000,()=>{
     console.log('fuck');
 })

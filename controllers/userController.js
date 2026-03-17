@@ -21,11 +21,14 @@ async function logUser(req,res){
     if(!match)
         return res.json("incorrect password");
     const token = jwt.sign({id:user.id},process.env.secretkey,{ expiresIn: '7d' })
-    res.json(token);   
+    res.json({
+        token,
+        authorId: user.id
+    });   
 }
 
 function verifyUser(req,res,next){
-    const bearerToken = res.headers.authorization;
+    const bearerToken = req.headers.authorization;
     if(bearerToken){
      const token = bearerToken.split(" ")[1];
      req.token = token;
