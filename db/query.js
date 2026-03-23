@@ -57,17 +57,27 @@ async function selectUser(username){
     }})
 }
 
-async function updatePostContent(id,title,content,authorId){
+async function updatePostContent(id,title,content){
     return prisma.post.update({
         where:{
-            id: id
+            id: parseInt(id)
         },
         data:{
             title,
-            content,
-            authorId
+            content
+        
         }
     })
 }
 
-module.exports = {selectAuthorPost,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent};
+async function findPostAuthor(postId){
+    return prisma.post.findUnique({
+        where:{
+            id: parseInt(postId)
+        },
+        select:{
+            authorId: true
+        }
+    })
+}
+module.exports = {selectAuthorPost,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor};
