@@ -8,4 +8,4 @@ author.get('/',verifyUser,getAuthorPosts);
 author.post('/',verifyUser,createPosts);
 author.put('/post/publish/:postId',publishPost);
 
-module.exports = author
+module.exports = author;

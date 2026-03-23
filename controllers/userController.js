@@ -31,9 +31,13 @@ function verifyUser(req,res,next){
     const bearerToken = req.headers.authorization;
     if(bearerToken){
      const token = bearerToken.split(" ")[1];
+     const decoded = jwt.verify(token,process.env.secretkey);
+     if(!decoded.id)
+        return res.json('user is not logged in');
      req.token = token;
+     req.userId = decoded.id;
     return next();
     }
-    res.sendStatud(403);
+    res.sendStatus(403);
 }
 module.exports = {signUser,logUser,verifyUser};
