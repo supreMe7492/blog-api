@@ -57,4 +57,17 @@ async function selectUser(username){
     }})
 }
 
-module.exports = {selectAuthorPost,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost};
+async function updatePostContent(id,title,content,authorId){
+    return prisma.post.update({
+        where:{
+            id: id
+        },
+        data:{
+            title,
+            content,
+            authorId
+        }
+    })
+}
+
+module.exports = {selectAuthorPost,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent};
