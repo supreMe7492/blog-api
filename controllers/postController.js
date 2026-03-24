@@ -1,4 +1,4 @@
-const {insertPost,selectuploadedPost,selectAuthorPost,updatePublishPost,updatePostContent,findPostAuthor} = require('../db/query');
+const {insertPost,selectuploadedPost,selectAuthorBlog,updatePublishPost,updatePostContent,findPostAuthor} = require('../db/query');
 require('dotenv').config();
 
 // function decodeUser(token){
@@ -20,7 +20,7 @@ async function getPosts(req,res){
 async function getAuthorPosts(req,res){
    
     const authorId = req.userId;
-    const authorPost = await selectAuthorPost(authorId);
+    const authorPost = await selectAuthorBlog(authorId);
     res.json(authorPost);
 }
 async function createPosts(req,res) {

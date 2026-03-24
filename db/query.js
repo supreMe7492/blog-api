@@ -1,9 +1,9 @@
 const { prisma } = require("../lib/prisma")
 
-async function selectAuthorPost(authorId){
+async function selectAuthorBlog(authorId){
     return prisma.post.findMany({
         where:{
-            authorId
+            authorId: parseInt(authorId)
         },
         include:{
             comments : true
@@ -80,4 +80,4 @@ async function findPostAuthor(postId){
         }
     })
 }
-module.exports = {selectAuthorPost,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor};
+module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor};
