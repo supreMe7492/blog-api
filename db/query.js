@@ -80,4 +80,12 @@ async function findPostAuthor(postId){
         }
     })
 }
-module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor};
+
+async function deletePost(postId){
+    return prisma.post.delete({
+        where:{
+            id: parseInt(postId)
+        }
+    })
+}
+module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor,deletePost};

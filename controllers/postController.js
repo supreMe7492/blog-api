@@ -1,4 +1,4 @@
-const {insertPost,selectuploadedPost,selectAuthorBlog,updatePublishPost,updatePostContent,findPostAuthor} = require('../db/query');
+const {insertPost,selectuploadedPost,selectAuthorBlog,updatePublishPost,updatePostContent,findPostAuthor,deletePost} = require('../db/query');
 require('dotenv').config();
 
 // function decodeUser(token){
@@ -59,4 +59,14 @@ async function editPost(req,res){
    res.json("not the author of this post") 
 }
 
-module.exports = {getPosts,createPosts,publishPost,getAuthorPosts,editPost};
+async function removePost(req,res){
+    const id = req.params.postId;
+    const isAuthor = await isAuthorPost(req.userId,id);
+    if(isAuthor){
+        await deletePost(id);
+        return res.json("deleted post successfully");
+    }
+  res.json("you are not the author of this post so fuck off respectfully!");  
+}
+
+module.exports = {getPosts,createPosts,publishPost,getAuthorPosts,editPost,removePost};
