@@ -5,7 +5,7 @@ async function postComment(req,res,next) {
     const postId = req.params.postId;
    const {name,comment} = req.body;
    await insertComment(name,comment,postId);
-   res.json("posted comment successfully");
+   res.json({success:true,message:"posted comment successfully"});
     }catch(err){
         next(err)
     }
