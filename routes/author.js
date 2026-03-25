@@ -4,9 +4,9 @@ const {getAuthorPosts,publishPost,createPosts,editPost,removePost} = require("..
 
 const author = Router();
 
-author.get('/',verifyUser,getAuthorPosts);
-author.post('/',verifyUser,createPosts);
-author.put('/post/publish/:postId',verifyUser,publishPost);
-author.put('/post/edit/:postId',verifyUser,editPost);
-author.put('/post/delete/:postId',verifyUser,removePost);
+author.get('/posts',verifyUser,getAuthorPosts);
+author.post('/posts',verifyUser,createPosts);
+author.patch('/posts/:postId',verifyUser,publishPost);
+author.put('/posts/:postId',verifyUser,editPost);
+author.delete('/posts/:postId',verifyUser,removePost);
 module.exports = author;

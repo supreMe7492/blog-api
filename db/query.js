@@ -6,7 +6,7 @@ async function selectAuthorBlog(authorId){
             authorId: parseInt(authorId)
         },
         include:{
-            comments : true
+            comments : true,
         }
     })
 }
@@ -14,7 +14,14 @@ async function selectAuthorBlog(authorId){
 async function selectuploadedPost(){
     return prisma.post.findMany({
         include:{
-            comments : true
+           authorId: false,  
+            author:{
+                select:{
+                    id: true,
+                    name:true
+                }
+            },
+     comments : true
         },
         where:{
             published : true
@@ -88,4 +95,16 @@ async function deletePost(postId){
         }
     })
 }
-module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor,deletePost};
+
+async function insertComment(name,comment,postId){
+    return prisma.comment.create({
+        data:{
+            name,
+            comment,
+            postId : parseInt(postId)
+        }
+    })
+}
+
+
+module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor,deletePost,insertComment};
