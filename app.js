@@ -16,6 +16,16 @@ app.use('/login',logIn);
 const author = require('./routes/author');
 app.use('/author',author);
 
+app.use((err,req,res,next)=>{
+    const status = err.status || 500;
+    res.status(status).json({
+        success: false,
+        error:{
+            code : status,
+            message: err.message
+        }
+    }) 
+})
 app.listen(3000,()=>{
     console.log('fuck');
 })
