@@ -86,8 +86,8 @@ async function removePost(req,res,next){
         const id = req.params.postId;
         const isAuthor = await isAuthorPost(req.userId,id);
         if(isAuthor){
-            await deletePost(id);
-            return res.json({success:true,message:"deleted post successfully"});
+            const data = await deletePost(id);
+            return res.json({success:true,message:data});
         }
         return next({status:403,message:"you are not the author of this post"});
     }catch(err){
