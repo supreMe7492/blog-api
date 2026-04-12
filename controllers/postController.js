@@ -34,8 +34,8 @@ async function createPosts(req,res,next) {
     try{
         const {title,content} = req.body;
         const authorId = req.userId;
-        await insertPost(content,title,authorId);
-        res.json({success:true,message:'completed'});
+        const post = await insertPost(content,title,authorId);
+        res.json({success:true,message:post});
     }catch(err){
         next(err)
     }
@@ -47,8 +47,8 @@ async function publishPost(req,res,next){
         const isAuthor = await isAuthorPost(req.userId,id);
         if(req.userId){
            if(isAuthor){
-             await updatePublishPost(id);
-             return res.json({success:true,message:"uploaded post"});
+            const data = await updatePublishPost(id);
+             return res.json({success:true,message:data});
            } else{
             return next({status:403,message:"you arenot the author of this post"})
            }  
