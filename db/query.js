@@ -1,110 +1,141 @@
-const { prisma } = require("../lib/prisma")
+const { prisma } = require("../lib/prisma");
 
-async function selectAuthorBlog(authorId){
-    return prisma.post.findMany({
-        where:{
-            authorId: parseInt(authorId)
+async function selectAuthorBlog(authorId) {
+  return prisma.post.findMany({
+    where: {
+      authorId: parseInt(authorId),
+    },
+    include: {
+      comments: true,
+    },
+  });
+}
+
+async function selectuploadedPost() {
+  return prisma.post.findMany({
+    include: {
+      authorId: false,
+      author: {
+        select: {
+          id: true,
+          name: true,
         },
-        include:{
-            comments : true,
-        }
-    })
+      },
+      comments: true,
+    },
+    where: {
+      published: true,
+    },
+  });
 }
 
-async function selectuploadedPost(){
-    return prisma.post.findMany({
-        include:{
-           authorId: false,  
-            author:{
-                select:{
-                    id: true,
-                    name:true
-                }
-            },
-     comments : true
+async function selectuploadedPostId(postId) {
+  return prisma.post.findMany({
+    where: {
+      id: parseInt(postId),
+      published: true,
+    },
+    include: {
+      authorId: false,
+      author: {
+        select: {
+          id: true,
+          name: true,
         },
-        where:{
-            published : true
-        }
-    })
+      },
+      comments: true,
+    },
+  });
 }
-async function insertPost(content,title,authorId){
-    return prisma.post.create({
-        data:{
-            title,
-            content,
-            authorId : parseInt(authorId)
-        }
-    })
-}
-
-async function updatePublishPost(id){
-    return prisma.post.update({
-        where:{
-           id: parseInt(id)
-        },
-        data:{
-            published: true
-        }
-    })
+async function insertPost(content, title, authorId) {
+  return prisma.post.create({
+    data: {
+      title,
+      content,
+      authorId: parseInt(authorId),
+    },
+  });
 }
 
-async function addAuthor(name,password){
-    return prisma.user.create({
-        data:{
-            name,
-            password
-        }
-    })
+async function updatePublishPost(id) {
+  return prisma.post.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      published: true,
+    },
+  });
 }
 
-async function selectUser(username){
-    return prisma.user.findUnique({where:{
-        name: username
-    }})
+async function addAuthor(name, password) {
+  return prisma.user.create({
+    data: {
+      name,
+      password,
+    },
+  });
 }
 
-async function updatePostContent(id,title,content){
-    return prisma.post.update({
-        where:{
-            id: parseInt(id)
-        },
-        data:{
-            title,
-            content
-        
-        }
-    })
+async function selectUser(username) {
+  return prisma.user.findUnique({
+    where: {
+      name: username,
+    },
+  });
 }
 
-async function findPostAuthor(postId){
-    return prisma.post.findUnique({
-        where:{
-            id: parseInt(postId)
-        },
-        select:{
-            authorId: true
-        }
-    })
+async function updatePostContent(id, title, content) {
+  return prisma.post.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      title,
+      content,
+    },
+  });
 }
 
-async function deletePost(postId){
-    return prisma.post.delete({
-        where:{
-            id: parseInt(postId)
-        }
-    })
+async function findPostAuthor(postId) {
+  return prisma.post.findUnique({
+    where: {
+      id: parseInt(postId),
+    },
+    select: {
+      authorId: true,
+    },
+  });
 }
 
-async function insertComment(name,comment,postId){
-    return prisma.comment.create({
-        data:{
-            name,
-            comment,
-            postId : parseInt(postId)
-        }
-    })
+async function deletePost(postId) {
+  return prisma.post.delete({
+    where: {
+      id: parseInt(postId),
+    },
+  });
 }
 
+async function insertComment(name, comment, postId) {
+  return prisma.comment.create({
+    data: {
+      name,
+      comment,
+      postId: parseInt(postId),
+    },
+  });
+}
 
-module.exports = {selectAuthorBlog,insertPost,addAuthor,selectUser,selectuploadedPost,updatePublishPost,updatePostContent,findPostAuthor,deletePost,insertComment};
+module.exports = {
+  selectAuthorBlog,
+  insertPost,
+  addAuthor,
+  selectUser,
+  selectuploadedPost,
+  updatePublishPost,
+  updatePostContent,
+  findPostAuthor,
+  deletePost,
+  insertComment,
+  selectuploadedPostId,
+};
